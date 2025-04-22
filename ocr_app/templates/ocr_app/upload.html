@@ -1,0 +1,38 @@
+﻿{% extends 'ocr_app/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Extraction de texte depuis une image</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.image.id_for_label }}" class="form-label">Sélectionnez une image</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="text-danger">{{ form.image.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img id="image-preview" class="preview-image" style="display: none;" />
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Extraire le texte</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

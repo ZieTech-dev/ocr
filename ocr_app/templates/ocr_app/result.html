@@ -1,0 +1,39 @@
+﻿{% extends 'ocr_app/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Résultat de l'extraction</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Image originale</h4>
+                        <img src="{{ ocr_result.image.url }}" class="preview-image" alt="Image originale">
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Texte extrait</h4>
+                        <div class="border p-3 bg-light" style="white-space: pre-wrap;">{{ ocr_result.extracted_text }}</div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'ocr_app:upload' %}" class="btn btn-primary">Nouvelle extraction</a>
+                    <button onclick="copyText()" class="btn btn-secondary">Copier le texte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyText() {
+    const text = `{{ ocr_result.extracted_text|escapejs }}`;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Texte copié dans le presse-papier!');
+    });
+}
+</script>
+{% endblock %}
